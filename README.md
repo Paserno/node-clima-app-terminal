@@ -53,4 +53,22 @@ do {
 } while (opt !== 0);
 ````
 #
-### 2.- ABCD: 
+### 2.- Modelo para controlar la aplicación: 
+* Crear carpeta `models/` y File `busquedas.js`, para luego crear la clase `Busquedas` con su __constructor__.
+* Luego creamos los elementos que se mostraran por pantalla en el __switch__ del __main (index.js)__.
+````
+case 1:
+    const lugar = await leerInput('Ciudad: ');
+    console.log(lugar);
+
+    console.log('\nInformacion de la Ciudad\n'.brightMagenta);
+    
+    console.log('Ciudad:');
+    console.log('Lat:');
+    console.log('Lng:');
+    console.log('Temperatura:');
+    console.log('Minima:');
+    console.log('Maxima:'); 
+brack;
+````
+
