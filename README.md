@@ -146,4 +146,57 @@ MAPBOX_KEY=xxxxxxxxx
 require('dotenv').config()
 ````
 #
-### 5.- ABCD: 
+### 5.- Listar Lugares Interactivamente:
+* Modificaremos la función `listadoTareasBorrar()` y le la cambiaremos a `listarLugares`.
+* Utilizado nombre de propiedades de acuerdo a la aplicación.
+````
+const listarLugares = async( lugares = [] ) => {
+
+    const choices = lugares.map( (lugar, i) => {
+        const idx = `${i + 1}`.brightGreen;
+        return {
+            value: lugar.id,
+            name: `${idx}. ${lugar.nombre}`
+        }
+    });
+````
+* Luego retornaremos los valores que necesitamos en este caso `resp.data.features` que viene de la API("features" que es el contenido que necesitamos de la busqueda).
+* Se realiza un `.map()` para entregar otro arreglo personalizado, arrojando la id, nombre, longitud y latitud.
+````
+return resp.data.features.map( lugar => ({
+                id: lugar.id,
+                nombre: lugar.place_name,
+                lng: lugar.center[0],
+                lat: lugar.center[1]
+            }));
+````
+> Ordenando el Switch. 
+<br>
+
+Ahora ordenaremos el codigo, en el `case 1:` del `switch` en el __index.js__.
+* En mostrar mensaje se cambio la constante acorde a la solucion de `const lugar` paso a `const termino`
+````
+const termino = await leerInput('Ciudad: ');
+````
+* En Buscar los lugares se declaro una constante nuevoa llamada `lugares`
+````
+const lugares = await busquedas.ciudad( termino );
+````
+* Se invoca la funcion `listarLugares()` donde se le pasa `lugares`.
+* En la seleccion del lugar se realizo un filtro con `.find()`, para 1 elemento, el que fue seleccionado.
+````
+// Seleccionar el lugar
+const id = await listarLugares(lugares);
+const lugarSel = lugares.find( l => l.id === id );
+console.log(lugarSel);
+````
+* Faltaria integrar la otra __API__ del __Clima__, para luego mostrar los resultados completos.
+* Por el momento se tiene el nombre de la ciudad, latitud y longitud.
+````
+console.log('\nInformacion de la Ciudad\n'.brightMagenta);
+console.log('Ciudad:', lugarSel.nombre);
+console.log('Lat:', lugarSel.lat );
+console.log('Lng:', lugarSel.lng);
+```` 
+#
+### 6.- ABCD: 
