@@ -5,6 +5,7 @@ Esta es una aplicación de clima con ayuda de la API de OpenWeatherMaps.
 Elementos Utilizados:
 * [Colors.js](https://www.npmjs.com/package/colors)
 * [Inquirer.js](https://www.npmjs.com/package/inquirer)
+* [Axios](https://www.npmjs.com/package/axios)
 #
 #### Para reconstruir los modulos de node ejecute el siguiente comando.
 ````
@@ -62,7 +63,7 @@ case 1:
     console.log(lugar);
 
     console.log('\nInformacion de la Ciudad\n'.brightMagenta);
-    
+
     console.log('Ciudad:');
     console.log('Lat:');
     console.log('Lng:');
@@ -71,4 +72,39 @@ case 1:
     console.log('Maxima:'); 
 brack;
 ````
+#
+### 3.- Realizar Peticiones HTTP desde Node:
+Se vio la alternativas que existian para __Node__ para hacer peticiones HTTP, se vieron diferentes paquetes de terceros, uno de estos eran:
 
+* [Request](https://www.npmjs.com/package/request)
+* [Fetch](https://www.npmjs.com/package/fetch)
+* __[Axios](https://www.npmjs.com/package/axios) <---__
+
+La Primera opción __Request__ es muy utilizada por la comunidad mas de 20M de descargas, pero dice el autor que se esta quedando obsoleta. <br>
+Despues esta __Fetch__ con 50k de descargas aprox (fecha actual del post), si bien el fetch de los navegadores son muy utiles, en node no es soportado, por eso hay que acudir a un 3ro, pero este paquete presenta algunas falencias, le falta ciertos elementos que no lo hacen estar completo. <br>
+Despues esta __Axios__ que es un paquete descargado por mas de 20M, es algo similar que __Request__, pero con la diferencia que trabaja con __Promesas__ y es el que se escogio para este proyecto.
+
+* Se instalo __axios__, para luego importarlo en `busquedas.js`.
+* Para probar se llamo a una API, esta es __reqres.in__, para hacer la petición inicial para el uso de `axios`.
+* En el metodo `ciudad()` se realizo la petición __get__ a la __API__.
+* Se encerro en un __try-catch__ en caso de tener algun tipo de error poder capturarlo.
+````
+try {
+    // Peticion HTTP
+    const resp = await axios.get('https://reqres.in/api/users?page=2');
+    console.log(resp.data);
+
+    return [];
+            
+} catch (error) {
+    return [];
+            
+}
+````
+Ahora en __index.js__ de la aplicación.
+* En el __Switch__ `case 1:` se inserto el metodo de __Busquedas__ `ciudad()`.
+* Para realizar las pruebas, se puso el `console.log` en el metodo `ciudad()`.
+````
+const lugar = await leerInput('Ciudad: ');
+await busquedas.ciudad( lugar );
+```` 
