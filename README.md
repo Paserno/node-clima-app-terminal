@@ -7,6 +7,7 @@ Elementos Utilizados:
 * [Inquirer.js](https://www.npmjs.com/package/inquirer)
 * [Axios](https://www.npmjs.com/package/axios)
 * [Mapbox](https://www.mapbox.com)
+* [Dotenv](https://www.npmjs.com/package/dotenv)
 #
 #### Para reconstruir los modulos de node ejecute el siguiente comando.
 ````
@@ -129,11 +130,20 @@ const intance = axios.create({
 ````
 get paramsMapbox(){
     return {
-        'access_token': 'xxxxxxxxxxxxxxxxxxx',
+        'access_token': process.env.MAPBOX_KEY,
         'limit': 5,
         'language': 'es'
     }
 }
+````
+* No olvidar, que se tiene un file llamado __.env__ _(gracias a Dotenv)_ donde se almacenan las variables de entorno y donde esta el acceso al token `access_token`.
+* Con esta "Key" se puede acceder a la API.
+````
+MAPBOX_KEY=xxxxxxxxx
+````
+* Ademas se importo en __index.js__.
+````
+require('dotenv').config()
 ````
 #
 ### 5.- ABCD: 
