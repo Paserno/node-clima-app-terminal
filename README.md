@@ -1,11 +1,12 @@
 > __Elemento Anterior 👀:__ __[Aplicación de Consola Interactiva 🖥️](https://github.com/Paserno/node-consola-todo-app)__
 
-# Aplicación de Clima ⛅
+# Aplicación de Clima ⛅ 
 Esta es una aplicación de clima con ayuda de la API de OpenWeatherMaps.
 Elementos Utilizados:
 * [Colors.js](https://www.npmjs.com/package/colors)
 * [Inquirer.js](https://www.npmjs.com/package/inquirer)
 * [Axios](https://www.npmjs.com/package/axios)
+* [Mapbox](https://www.mapbox.com)
 #
 #### Para reconstruir los modulos de node ejecute el siguiente comando.
 ````
@@ -90,16 +91,17 @@ Despues esta __Axios__ que es un paquete descargado por mas de 20M, es algo simi
 * Se establecio el `console.log` para mostrar por pantalla los los __datos__ que son traidos por `resp` de la API.
 * Se encerro en un __try-catch__ en caso de tener algun tipo de error poder capturarlo.
 ````
-try {
-    // Peticion HTTP
-    const resp = await axios.get('https://reqres.in/api/users?page=2');
-    console.log(resp.data);
+async ciudad( lugar = '' ){
+    try {
+        // Peticion HTTP
+        const resp = await axios.get('https://reqres.in/api/users?page=2');
+        console.log(resp.data);
 
-    return [];
-            
-} catch (error) {
-    return [];
-            
+        return [];
+
+    } catch (error) {
+        return [];
+    }
 }
 ````
 Ahora en __index.js__ de la aplicación.
@@ -109,3 +111,29 @@ Ahora en __index.js__ de la aplicación.
 const lugar = await leerInput('Ciudad: ');
 await busquedas.ciudad( lugar );
 ```` 
+#
+### 4.- Pulir intancia de Axios:
+Ahora utilizaremos la API de Mapbox, para poder traer los datos que se desean obtener.
+* Eliminamos el `axios.get` del anterior paso, para remplazarlo por lo que construiremos ahora.
+* Se crea una constante llamada `intance`, con ayuda de `axios.create`.
+* Establecemos __baseURL__, nos basamos en la documentacion de Axios, y ingresamos la dirección de la API, para luego establecerle el argumento que recibiremos llamado `lugar` en el medodo __Ciudad__, esta sera recibida para hacer la busqueda.
+* Le pasamos los parametros de busqueda, que mostraremos a posteriormente en `params: ...`.
+````
+const intance = axios.create({
+                baseURL: `https://api.mapbox.com/geocoding/v5/mapbox.places/${ lugar }.json`,
+                params: this.paramsMapbox
+});
+````
+* Creamos un `get paramsMapbox()`, para tener un mayor orden en el codigo.
+* Lo que le retornaremos son los parametros que necesita __Axios__ para la busqueda de la ciudad, en este caso necesitando  el __token__, __limite__ de resultados a entregar y el __idioma__, en este caso español. 
+````
+get paramsMapbox(){
+    return {
+        'access_token': 'xxxxxxxxxxxxxxxxxxx',
+        'limit': 5,
+        'language': 'es'
+    }
+}
+````
+#
+### 5.- ABCD: 
