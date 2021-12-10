@@ -8,31 +8,15 @@ const menuOpts = [
         message: 'Que desea hacer?',
         choices: [
             {
-                value: '1',
-                name: `${'1.'.brightMagenta} Crear Tarea`
+                value: 1,
+                name: `${'1.'.brightMagenta} Buscar Ciudad`
             },
             {
-                value: '2',
-                name: `${'2.'.brightMagenta} Listar Tareas`
+                value: 2,
+                name: `${'2.'.brightMagenta} Historial`
             },
             {
-                value: '3',
-                name: `${'3.'.brightMagenta} Listar Tareas Completadas`
-            },
-            {
-                value: '4',
-                name: `${'4.'.brightMagenta} Listar Tareas Pendiente` 
-            },
-            {
-                value: '5',
-                name: `${'5.'.brightMagenta} Completar Tarea(s)`
-            },
-            {
-                value: '6',
-                name: `${'6.'.brightMagenta} Borrar Tarea`
-            },
-            {
-                value: '0',
+                value: 0,
                 name: `${'0.'.brightMagenta} Salir`
             }
         ]
