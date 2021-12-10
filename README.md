@@ -87,6 +87,7 @@ Despues esta __Axios__ que es un paquete descargado por mas de 20M, es algo simi
 * Se instalo __axios__, para luego importarlo en `busquedas.js`.
 * Para probar se llamo a una API, esta es __reqres.in__, para hacer la petición inicial para el uso de `axios`.
 * En el metodo `ciudad()` se realizo la petición __get__ a la __API__.
+* Se establecio el `console.log` para mostrar por pantalla los los __datos__ que son traidos por `resp` de la API.
 * Se encerro en un __try-catch__ en caso de tener algun tipo de error poder capturarlo.
 ````
 try {
