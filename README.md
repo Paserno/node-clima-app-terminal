@@ -9,6 +9,8 @@ Elementos Utilizados:
 * [Mapbox](https://www.mapbox.com)
 * [Dotenv](https://www.npmjs.com/package/dotenv)
 * [OpenWeather](https://openweathermap.org)
+
+Se utilizaron 4 paquetes (Colors, Inquirer, Axios y Dotenv) y 2 APIs (Mapbox: mapa, OpenWeather: clima).
 #
 #### Para reconstruir los modulos de node ejecute el siguiente comando.
 ````
@@ -76,7 +78,7 @@ case 1:
 brack;
 ````
 #
-### 3.- Realizar Peticiones HTTP desde Node:
+### 3.- Realizar Peticiones HTTP desde Node 🟩:
 Se vio la alternativas que existian para __Node__ para hacer peticiones HTTP, se vieron diferentes paquetes de terceros, uno de estos eran:
 
 * [Request](https://www.npmjs.com/package/request)
@@ -358,3 +360,4 @@ Adiconalmente en el metodo `agregarHistorial()` de la clase busquedas, realizare
 ````
 this.historial = this.historial.splice(0,5);
 ````
+#
