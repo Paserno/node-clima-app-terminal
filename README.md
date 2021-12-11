@@ -150,7 +150,7 @@ require('dotenv').config()
 ````
 #
 ### 5.- Listar Lugares Interactivamente:
-* Modificaremos la función `listadoTareasBorrar()` y le la cambiaremos a `listarLugares`.
+* Modificaremos la función `listadoTareasBorrar()` y le la cambiaremos a `listarLugares` (en  __inquirer.js__).
 * Utilizado nombre de propiedades de acuerdo a la aplicación.
 ````
 const listarLugares = async( lugares = [] ) => {
@@ -163,7 +163,8 @@ const listarLugares = async( lugares = [] ) => {
         }
     });
 ````
-* Luego retornaremos los valores que necesitamos en este caso `resp.data.features` que viene de la API("features" que es el contenido que necesitamos de la busqueda).
+Nos vamos a `busqyedas.js` en el metodo `ciudad` dentro del __try__ en el `try-catch`;
+* Luego retornaremos los valores que necesitamos en este caso `resp.data.features` que viene de la API _("features" que es el contenido que necesitamos de la busqueda)_.
 * Se realiza un `.map()` para entregar otro arreglo personalizado, arrojando la id, nombre, longitud y latitud.
 ````
 return resp.data.features.map( lugar => ({
@@ -186,14 +187,14 @@ const termino = await leerInput('Ciudad: ');
 const lugares = await busquedas.ciudad( termino );
 ````
 * Se invoca la funcion `listarLugares()` donde se le pasa `lugares`.
-* En la seleccion del lugar se realizo un filtro con `.find()`, para 1 elemento, el que fue seleccionado.
+* En la seleccion del lugar se realizo un filtro con `.find()`, para pasar 1 elemento, el que fue seleccionado.
 ````
 // Seleccionar el lugar
 const id = await listarLugares(lugares);
 const lugarSel = lugares.find( l => l.id === id );
 console.log(lugarSel);
 ````
-* Faltaria integrar la otra __API__ del __Clima__, para luego mostrar los resultados completos.
+Faltaria integrar la otra __API__ del __Clima__, para luego mostrar los resultados completos.
 * Por el momento se tiene el nombre de la ciudad, latitud y longitud.
 ````
 console.log('\nInformacion de la Ciudad\n'.brightMagenta);
@@ -215,8 +216,8 @@ get paramsOpenWeather(){
         }
 }
 ````
-* Creamos la funcion asincrona `climaLugar`, la que necesitamos la latitud y longitud, que nos pasará la otra API.
-* Establecemos el Axios, con los datos a utilizar, la URL ademas de sus paramentros a utilizar (usando el get anterior mencionado).
+* Creamos la funcion asincrona `climaLugar`, la que necesitamos la latitud y longitud, que nos pasará la otra API _(Mapbox)_.
+* Establecemos el Axios, con los datos a utilizar, la URL ademas de sus paramentros a utilizar _(usando el get anterior mencionado)_.
 ````
 async climaLugar(lat, lon){
      try {
@@ -251,7 +252,7 @@ Ahora estamos en file __index.js__.
 ````
 const clima = await busquedas.climaLugar(lugarSel.lat,lugarSel.lng);
 ````
-* Ahora usamos la constante `clima` que declaramos, para traer los diferentes elementos del return del metodo `climaLugar()` y los mostramos por pantalla (consola).
+* Ahora usamos la constante `clima` que declaramos, para traer los diferentes elementos del return del metodo `climaLugar()` y los mostramos por pantalla _(consola)_.
 ```` 
 console.log('Temperatura:', clima.temp);
 console.log('Maxima:', clima.max);
@@ -310,7 +311,7 @@ break;
 ````
 # 
 ### 8.- Leer Archivo JSON:
-Ahora leeremos los archivos que son registrados.
+Ahora leeremos el archivos con los datos registrados.
 * Se crea el metodo `leerDB()`, en la clase `busquedas`.
 * Se hará una condicion para verificar la existencia del documento __.JSON__.
 * Luego con ayuda de __fs__, leeremos el documento usando `readFileSync`.
@@ -355,7 +356,7 @@ En __index.js__ de la aplicación;
 ````
 busquedas.historialCapitalizado.forEach( (lugar, id) => {...}
 ````
-Adiconalmente en el metodo `agregarHistorial()` de la clase busquedas, realizaremos una limitación del historial.
+Adiconalmente en el metodo `agregarHistorial()` de la clase busquedas, realizaremos una limitación del historial, para mostrar un historial de busqueda limitado.
 * El metodo `.splice(0,5)` elimina los elementos del arreglo `this.historial`, manteniendo solo 6 elementos.
 ````
 this.historial = this.historial.splice(0,5);
