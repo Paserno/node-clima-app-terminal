@@ -257,3 +257,54 @@ console.log('Minima:', clima.min);
 console.log('Como esta el clima:', clima.desc.brightGreen);
 ````
 #
+### 7.- Registrar Busqueda en .JSON:
+Deseamos tener un registro persistente de la busqueda, para esto se desea guardar en un archivo, para no solo tenerlo en memoria lo que registramos.
+* Como primer paso creamos la 📂carpeta `db/`, para dejar el registro de las busquedas.
+* Luego nos vamos al file __busquedas.js__, para vaciar nuestro arreglo de la clase `historial`.
+* Creamos el path de nuestra "base de dato".
+````
+historial = [];
+dbPath = './db/database.json'
+````
+* Creamos el metodo `guardarDB`, lo que hara es registrar en un archivo `.JSON` los datos.
+* Creamos un `payload`, para guardar los registros del arreglo.
+* Luego se lo pasamos a la propiedad `fs.writeFileSync()`, no olviadar imporar `fs`.
+* Transformamos el `payload` en un __JSON__.
+````
+guardarDB() {
+    const payload = {
+        historial: this.historial
+    };
+    fs.writeFileSync(this.dbPath, JSON.stringify(payload));
+}
+````
+*  Creamos un metodo `agregarHistorial()` donde le pasamos un string.
+* Realizamos una validación para no registrar busquedas repetidas, convirtiendo la cadena de texto en minúscula, para luego hacer una comparación si existe una cadena igual ya registrada, en ese caso retorna, y no se guarda.
+* Para agruegar al inicio del arrelgo `historial` usamos `.unshift()`, tambien le pasamos minúscual, para que se pueda hacer la comparación correctamente.
+* Invocamos la función anteiormente mostrada para registrar en el file __JSON__.
+````
+agregarHistorial( lugar = ''){
+    if(this.historial.includes( lugar.toLocaleLowerCase() ) ){
+        return;
+    }
+    this.historial.unshift(lugar.toLocaleLowerCase() );
+
+    this.guardarDB();
+}
+````
+En el file __index.js__.
+* Dentro del `case 1:` despues de ingresar el nombre de la ciuidad, invocamos el metodo `agregarHistorial()` para reguistrar el nuevo nombre en el arreglo y luego guardarlo en el documento JSON.
+````
+busquedas.agregarHistorial(lugarSel.nombre);
+````
+* En el `case 2:` realizamos una busqueda del arreglo `historial[]` con ayuda de un __forEach__, donde le ponemos una id y mostramos los lugares registrados, esto es para mostrar los datos por pantalla.
+````
+case 2:
+    busquedas.historial.forEach( (lugar, id) => {
+        const idx = `${ id + 1}.`.brightGreen;
+        console.log(`${idx} ${ lugar }`);
+    })
+break;
+````
+# 
+### 8.- ABCD
