@@ -8,6 +8,7 @@ Elementos Utilizados:
 * [Axios](https://www.npmjs.com/package/axios)
 * [Mapbox](https://www.mapbox.com)
 * [Dotenv](https://www.npmjs.com/package/dotenv)
+* [OpenWeather](https://openweathermap.org)
 #
 #### Para reconstruir los modulos de node ejecute el siguiente comando.
 ````
@@ -199,4 +200,60 @@ console.log('Lat:', lugarSel.lat );
 console.log('Lng:', lugarSel.lng);
 ```` 
 #
-### 6.- ABCD: 
+### 6.- Información del Tiempo:
+A si como nos conectamos a la primera API Mapbox, de la misma manera nos conectaremos a la __API OpenWeather__.
+* Una vez validado los datos en __Postman__ generamos una función get, para solicitar la información con algunos parametros, ademas del token.
+* Nos vamos a __busquedas.js__
+````
+get paramsOpenWeather(){
+        return {
+            'appid': process.env.OPENWEATHER_KEY,
+            'units': 'metric',
+            'lang': 'es'
+        }
+}
+````
+* Creamos la funcion asincrona `climaLugar`, la que necesitamos la latitud y longitud, que nos pasará la otra API.
+* Establecemos el Axios, con los datos a utilizar, la URL ademas de sus paramentros a utilizar (usando el get anterior mencionado).
+````
+async climaLugar(lat, lon){
+     try {
+        const intance = axios.create({
+            baseURL: `https://api.openweathermap.org/data/2.5/weather`,
+            params: {...this.paramsOpenWeather, lat, lon}
+        });
+        ...
+        }
+         catch (error) {
+         console.log(error);
+     }   
+}
+````
+*  Nos traemos el `intance` que nos guarda los datos que nos entrega el axios, para luego guardarlo en una constante.
+* Hacemos la desestructuracción de `resp.data`, para traernos los datos de la API que necesitamos, en este caso `{ weather, main }`.
+````
+const resp = await intance.get();
+const { weather, main } = resp.data;
+````
+* Realizamos el retorno, de los datos que utilizaremos, para mostrar por pantalla.
+```` 
+return {
+    desc: weather[0].description.toUpperCase(),
+    min: main.temp_min,
+    max: main.temp_max,
+    temp: main.temp
+};
+````
+Ahora estamos en file __index.js__.
+* Treamos el nuevo metodo `climaLugar()` y le entregamos la latitud y lognitud, anteriormente obtenidas.
+````
+const clima = await busquedas.climaLugar(lugarSel.lat,lugarSel.lng);
+````
+* Ahora usamos la constante `clima` que declaramos, para traer los diferentes elementos del return del metodo `climaLugar()` y los mostramos por pantalla (consola).
+```` 
+console.log('Temperatura:', clima.temp);
+console.log('Maxima:', clima.min);
+console.log('Minima:', clima.min);
+console.log('Como esta el clima:', clima.desc.brightGreen);
+````
+#

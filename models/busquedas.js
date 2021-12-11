@@ -38,6 +38,39 @@ class Busquedas{
         }
     }
     
+    get paramsOpenWeather(){
+        return {
+            'appid': process.env.OPENWEATHER_KEY,
+            'units': 'metric',
+            'lang': 'es'
+        }
+    }
+
+    async climaLugar(lat, lon){
+
+     try {
+        const intance = axios.create({
+            baseURL: `https://api.openweathermap.org/data/2.5/weather`,
+            params: {...this.paramsOpenWeather, lat, lon}
+
+        });
+        const resp = await intance.get();
+       const { weather, main } = resp.data;
+        return {
+            desc: weather[0].description.toUpperCase(),
+            min: main.temp_min,
+            max: main.temp_max,
+            temp: main.temp
+        };
+
+
+     } catch (error) {
+         console.log(error);
+     }   
+        
+    }
+
+
 }
 
 module.exports = Busquedas;
