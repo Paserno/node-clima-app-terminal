@@ -44,13 +44,13 @@ const main = async() => {
                 console.log('Lat:', lugarSel.lat );
                 console.log('Lng:', lugarSel.lng);
                 console.log('Temperatura:', clima.temp);
-                console.log('Maxima:', clima.min);
+                console.log('Maxima:', clima.max);
                 console.log('Minima:', clima.min);
                 console.log('Como esta el clima:', clima.desc.brightGreen);
 
             break;
             case 2:
-                busquedas.historial.forEach( (lugar, id) => {
+                busquedas.historialCapitalizado.forEach( (lugar, id) => {
                     const idx = `${ id + 1}.`.brightGreen;
                     console.log(`${idx} ${ lugar }`);
                 })

@@ -1,0 +1,1 @@
+# En esta carpeta estarán los elementos que se almacenarán!

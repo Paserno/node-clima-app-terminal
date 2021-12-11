@@ -252,7 +252,7 @@ const clima = await busquedas.climaLugar(lugarSel.lat,lugarSel.lng);
 * Ahora usamos la constante `clima` que declaramos, para traer los diferentes elementos del return del metodo `climaLugar()` y los mostramos por pantalla (consola).
 ```` 
 console.log('Temperatura:', clima.temp);
-console.log('Maxima:', clima.min);
+console.log('Maxima:', clima.max);
 console.log('Minima:', clima.min);
 console.log('Como esta el clima:', clima.desc.brightGreen);
 ````
@@ -307,4 +307,54 @@ case 2:
 break;
 ````
 # 
-### 8.- ABCD
+### 8.- Leer Archivo JSON:
+Ahora leeremos los archivos que son registrados.
+* Se crea el metodo `leerDB()`, en la clase `busquedas`.
+* Se hará una condicion para verificar la existencia del documento __.JSON__.
+* Luego con ayuda de __fs__, leeremos el documento usando `readFileSync`.
+* Realizamos la trasformación a un objeto con `JSON.parse`.
+* Luego le pasamos los `datos.historial` ya que viene en un arreglo.
+````
+leerDB(){
+        if(!fs.existsSync(this.dbPath) ) return;
+        
+        const info = fs.readFileSync(this.dbPath, {encoding:'utf-8'} ); 
+        const data = JSON.parse(info);
+        
+         this.historial = data.historial;
+    }
+````
+* Le pasamos al constructor el methodo creado `leerDB()`.
+````
+ constructor(){
+        this.leerDB();
+    }
+````
+Para realizar la capitalización de las palabras es necesario hacer lo siguiente;
+* Creamos un __Get__ con nombre `historialCapitalizado()`.
+* Retornar `this.historial` con ayuda del `.map()` para hacer un nuevo arreglo.
+* Usamos `.split(' ')`, para hacer el corte del arreglo por los espacios.
+* Realizamos otro `.map()` para retornar la primera palabra y usar `.toUpperCase()` y luego sumarle toda la palabra con `p.substring(1)`, con esto logramos __Capitalizar Cada una de las Palabras__.
+* realizamos un return, con un __join__, para volver a unir el arreglo que se separo con `.split()`.
+
+````
+get historialCapitalizado(){
+    return this.historial.map( lugar => {
+        
+        let palabras = lugar.split(' ');
+        palabras = palabras.map( p => p[0].toUpperCase() + p.substring(1));
+        
+        return palabras.join(' ');
+    });
+}
+````
+En __index.js__ de la aplicación;
+* En el `case 2:`, remplazamos `historial` por el __Get__ `historialCapitalizado()` que realizamos para la capitalización de las palabras.
+````
+busquedas.historialCapitalizado.forEach( (lugar, id) => {...}
+````
+Adiconalmente en el metodo `agregarHistorial()` de la clase busquedas, realizaremos una limitación del historial.
+* El metodo `.splice(0,5)` elimina los elementos del arreglo `this.historial`, manteniendo solo 6 elementos.
+````
+this.historial = this.historial.splice(0,5);
+````
